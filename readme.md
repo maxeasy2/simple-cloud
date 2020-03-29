@@ -25,3 +25,24 @@ Docker를 통해 배포하여 간단하게 웹에서 파일을 공유할 수 있
 - Docker
 - Mysql-8.0.19
 
+## docker-compose
+```
+version: "3"
+services:
+  mysql-db:
+    image: mysql:8.0.19
+    container_name: mysql-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: "simple_cloud"
+      MYSQL_USER: "webdb"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "password"
+      TZ: "Asia/Seoul"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - /develop/docker/mysql/volume:/var/lib/mysql # DB 파일관리 디렉터리 볼륨설정
+```
