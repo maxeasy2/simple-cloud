@@ -25,7 +25,7 @@ Docker를 통해 배포하여 간단하게 웹에서 파일을 공유할 수 있
 - Docker
 - Mysql-8.0.19
 
-## docker-compose
+## docker-compose.yml
 ```
 version: "3"
 services:
