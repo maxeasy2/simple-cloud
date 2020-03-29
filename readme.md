@@ -30,8 +30,11 @@ Docker를 통해 배포하여 간단하게 웹에서 파일을 공유할 수 있
 version: "3"
 services:
   mysql-db:
+    #image: mysql:5.7.29
     image: mysql:8.0.19
     container_name: mysql-db
+    networks:
+      - default-network
     ports:
       - "3306:3306"
     environment:
@@ -44,5 +47,19 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
     volumes:
-      - /develop/docker/mysql/volume:/var/lib/mysql # DB 파일관리 디렉터리 볼륨설정
+      - /develop/docker/mysql/volume:/var/lib/mysql
+  web:
+    image: simple-cloud:0.1
+    container_name: simple-cloud
+    networks:
+     - default-network
+    ports:
+     - 80:8080
+    environment:
+      DB_HOST: mysql-db
+      DB_PORT: 3306
+      DB_USER: webdb
+      DB_PASSWORD: password
+networks:
+  default-network:
 ```
