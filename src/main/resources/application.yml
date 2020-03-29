@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: simple-cloud
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  resources:
+    static-locations: classpath:static/
+  thymeleaf:
+    prefix: classpath:view/
+    check-template-location: true
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+simple-cloud:
+  timezone: Asia/Seoul
+  mysql-db:
+    host: localhost
+    port: 3306
+    database: simple_cloud
+    username: webdb
+    password: password
+---
+spring:
+  profiles: test
+  h2:
+  datasource:
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+---
+spring:
+  profiles: production
+  datasource:
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://${simple-cloud.mysql-db.host}:${simple-cloud.mysql-db.port}/${simple-cloud.mysql-db.database}?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&&serverTimezone=${simple-cloud.timezone}
+      username: ${simple-cloud.mysql-db.username}
+      password: ${simple-cloud.mysql-db.password}
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
